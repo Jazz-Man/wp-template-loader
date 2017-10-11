@@ -64,6 +64,6 @@ class TemplateLoader
         $result = ob_get_contents();
         ob_end_clean();
 
-        return $result;
+        return preg_replace('~>\s+<~', '><', $result);
     }
 }
