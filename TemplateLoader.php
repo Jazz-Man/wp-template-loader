@@ -16,19 +16,19 @@ class TemplateLoader
             wp_die('The parameter $name can not be empty');
         }
         $stylesheet_dir = get_stylesheet_directory();
-        $template_dir   = get_template_directory();
+        $template_dir = get_template_directory();
         if ('' === $dir) {
             $dir = $template_dir;
         }
-        $tpl_dir  = 'template';
+        $tpl_dir = 'template';
         $template = locate_template("{$name}.php");
-        if (! $template && ! empty($name) && file_exists("{$stylesheet_dir}/{$tpl_dir}/{$name}.php")) {
+        if (!$template && !empty($name) && file_exists("{$stylesheet_dir}/{$tpl_dir}/{$name}.php")) {
             $template = "{$stylesheet_dir}/{$tpl_dir}/{$name}.php";
         }
-        if (! $template && ! empty($name) && file_exists("{$template_dir}/{$tpl_dir}/{$name}.php")) {
+        if (!$template && !empty($name) && file_exists("{$template_dir}/{$tpl_dir}/{$name}.php")) {
             $template = "{$template_dir}/{$tpl_dir}/{$name}.php";
         }
-        if (! $template && ! empty($name) && file_exists("{$dir}/{$tpl_dir}/{$name}.php")) {
+        if (!$template && !empty($name) && file_exists("{$dir}/{$tpl_dir}/{$name}.php")) {
             $template = "{$dir}/{$tpl_dir}/{$name}.php";
         }
         if (empty($template)) {
@@ -67,30 +67,6 @@ class TemplateLoader
         $result = ob_get_contents();
         ob_end_clean();
 
-        return self::sanitize_output($result);
-    }
-
-    /**
-     * @param string $buffer
-     *
-     * @return string
-     **/
-    private static function sanitize_output($buffer)
-    {
-        $search = [
-            '/>[^\S ]+/s',   // strip whitespaces after tags, except space
-            '/[^\S ]+</s',   // strip whitespaces before tags, except space
-            '/(\s)+/s',     // shorten multiple whitespace sequences
-            '/<!--(.|\s)*?-->/', // Remove HTML comments
-        ];
-        $replace = [
-            '>',
-            '<',
-            '\\1',
-            '',
-        ];
-        $buffer = preg_replace($search, $replace, $buffer);
-
-        return $buffer;
+        return $result;
     }
 }
