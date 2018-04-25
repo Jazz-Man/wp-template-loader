@@ -9,8 +9,6 @@ if (!function_exists('view')) {
      * @param string $dir
      *
      * @return string
-     *
-     * @throws \Exception
      */
     function view($name, array $args = [], $dir = '')
     {
