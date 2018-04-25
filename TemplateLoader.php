@@ -47,8 +47,6 @@ class TemplateLoader
      * @param string $dir
      *
      * @return string
-     *
-     * @throws \Exception
      */
     public static function load($name = '', array $args = [], $dir = '')
     {
